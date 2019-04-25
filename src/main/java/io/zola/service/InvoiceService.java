@@ -36,7 +36,7 @@ public class InvoiceService implements CrudService<InvoiceTO, InvoiceSearchConte
 
   @Override
   public List<InvoiceTO> search(InvoiceSearchContext searchContext) {
-    Pageable pageable = PageRequest.of(searchContext.getPageNumber(), searchContext.getPageSize(), Sort.by("created_at"));
+    Pageable pageable = PageRequest.of(searchContext.getPageNumber(), searchContext.getPageSize(), Sort.by("createdAt"));
 
     List<Invoice> invoices = invoiceRepository.findAllByInvoiceNumberOrPoNumber(searchContext.getInvoiceNumber(), searchContext.getPoNumber(), pageable);
     return invoices.stream().map(converter::from).collect(Collectors.toList());

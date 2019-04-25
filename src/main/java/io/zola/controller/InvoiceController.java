@@ -2,7 +2,6 @@ package io.zola.controller;
 
 import io.zola.Converter;
 import io.zola.CrudService;
-import io.zola.controller.converter.InvoiceDtoConverter;
 import io.zola.controller.model.InvoiceDTO;
 import io.zola.exception.InvoiceException;
 import io.zola.service.context.InvoiceSearchContext;
@@ -46,8 +45,8 @@ public class InvoiceController {
   @RequestMapping(value = Routes.INVOICE_SEARCH_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.OK)
 
-  public ResponseEntity<List<InvoiceDTO>> search(@RequestParam(required = false) String invoiceNumber, @RequestParam(required = false) String poNumber) {
-    InvoiceSearchContext invoiceSearchContext = InvoiceSearchContext.builder().invoiceNumber(invoiceNumber).poNumber(poNumber).build();
+  public ResponseEntity<List<InvoiceDTO>> search(@RequestParam(required = false) String invoiceNumber, @RequestParam(required = false) String poNumber, @RequestParam(required = false, defaultValue = "20") Integer pageSize, @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+    InvoiceSearchContext invoiceSearchContext = InvoiceSearchContext.builder().invoiceNumber(invoiceNumber).poNumber(poNumber).pageSize(pageSize).pageNumber(pageNumber).build();
     List<InvoiceDTO> data = invoiceService.search(invoiceSearchContext).stream().map(converter::from).collect(Collectors.toList());
     return ResponseEntity.ok(data);
   }
