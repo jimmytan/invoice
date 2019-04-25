@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class InvoiceDTO {
 
+  private long id;
+
   @NotNull
   private String invoiceNumber;
 

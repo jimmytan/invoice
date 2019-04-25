@@ -1,5 +1,7 @@
 package io.zola.controller.converter;
 
+import static io.zola.Constants.INVOICE_NUMBER;
+import static io.zola.Constants.PO_NUMBER;
 import static org.junit.Assert.assertEquals;
 
 import io.zola.config.AppConfig;
@@ -17,8 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ContextConfiguration(classes = {AppConfig.class, InvoiceDtoConverter.class})
 public class InvoiceDtoConverterTest {
 
-  private static final String INVOICE_NUMBER = "invoiceNumber";
-  private static final String PO_NUMBER = "poNumber";
   @Autowired
   private InvoiceDtoConverter converter;
 

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InvoiceTO {
 
+  private long id;
   private String invoiceNumber;
   private String poNumber;
   private long amountInCents;

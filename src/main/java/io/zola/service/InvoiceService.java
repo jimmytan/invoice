@@ -32,7 +32,6 @@ public class InvoiceService implements CrudService<InvoiceTO, InvoiceSearchConte
         .map(invoiceRepository::save)
         .map(converter::from)
         .orElseThrow(() -> new InvoiceException("unable to save invoice" + model.toString()));
-
   }
 
   @Override
