@@ -20,6 +20,6 @@ public class InvoiceDTO {
 
   @NotNull
   private long amountInCents;
-  private String date;
-  private String timeStamp;
+  private String dueDate;
+  private String createAt;
 }

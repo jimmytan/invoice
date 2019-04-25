@@ -13,4 +13,6 @@ public class InvoiceSearchContext {
 
   private String invoiceNumber;
   private String poNumber;
+  private int pageNumber;
+  private int pageSize;
 }

@@ -16,6 +16,9 @@ public class InvoiceDtoConverter implements Converter<InvoiceDTO, InvoiceTO> {
   private ModelMapper modelMapper;
 
   private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+
 
   @Override
   public InvoiceTO to(InvoiceDTO source) {
@@ -24,8 +27,8 @@ public class InvoiceDtoConverter implements Converter<InvoiceDTO, InvoiceTO> {
     }
 
     InvoiceTO invoiceTO = modelMapper.map(source, InvoiceTO.class);
-    if (source.getDate() != null) {
-      invoiceTO.setDate(LocalDate.parse(source.getDate(), DATE_FORMATTER));
+    if (source.getDueDate() != null) {
+      invoiceTO.setDueDate(LocalDate.parse(source.getDueDate(), DATE_FORMATTER));
     }
     return invoiceTO;
   }
@@ -37,8 +40,12 @@ public class InvoiceDtoConverter implements Converter<InvoiceDTO, InvoiceTO> {
     }
 
     InvoiceDTO invoiceDTO = modelMapper.map(target, InvoiceDTO.class);
-    if (target.getDate() != null) {
-      invoiceDTO.setDate(target.getDate().format(DATE_FORMATTER));
+    if (target.getDueDate() != null) {
+      invoiceDTO.setDueDate(target.getDueDate().format(DATE_FORMATTER));
+    }
+
+    if (target.getCreateAt() != null) {
+      invoiceDTO.setCreateAt(target.getCreateAt().format(DATE_TIME_FORMATTER));
     }
     return invoiceDTO;
   }
