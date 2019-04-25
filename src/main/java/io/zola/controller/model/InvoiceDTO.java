@@ -22,6 +22,8 @@ public class InvoiceDTO {
 
   @NotNull
   private long amountCents;
+
+  @NotNull
   private String dueDate;
   private String createdAt;
 }

@@ -2,6 +2,7 @@ package io.zola.service;
 
 import io.zola.Converter;
 import io.zola.CrudService;
+import io.zola.Validator;
 import io.zola.exception.InvoiceException;
 import io.zola.repository.InvoiceRepository;
 import io.zola.repository.model.Invoice;
@@ -25,8 +26,12 @@ public class InvoiceService implements CrudService<InvoiceTO, InvoiceSearchConte
   @Autowired
   private Converter<InvoiceTO, Invoice> converter;
 
+  @Autowired
+  private Validator<InvoiceTO> validator;
+
   @Override
   public InvoiceTO create(InvoiceTO model) {
+    validator.validate(model);
     return Optional.of(model)
         .map(converter::to)
         .map(invoiceRepository::save)
@@ -37,8 +42,13 @@ public class InvoiceService implements CrudService<InvoiceTO, InvoiceSearchConte
   @Override
   public List<InvoiceTO> search(InvoiceSearchContext searchContext) {
     Pageable pageable = PageRequest.of(searchContext.getPageNumber(), searchContext.getPageSize(), Sort.by("createdAt"));
+    List<Invoice> invoices;
+    if (searchContext.getPoNumber() == null && searchContext.getInvoiceNumber() == null) {
+      invoices = invoiceRepository.findAll(pageable).getContent();
+    }else {
+      invoices = invoiceRepository.findAllByInvoiceNumberOrPoNumber(searchContext.getInvoiceNumber(), searchContext.getPoNumber(), pageable);
+    }
 
-    List<Invoice> invoices = invoiceRepository.findAllByInvoiceNumberOrPoNumber(searchContext.getInvoiceNumber(), searchContext.getPoNumber(), pageable);
     return invoices.stream().map(converter::from).collect(Collectors.toList());
   }
 }

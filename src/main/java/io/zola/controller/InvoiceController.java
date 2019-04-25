@@ -2,6 +2,7 @@ package io.zola.controller;
 
 import io.zola.Converter;
 import io.zola.CrudService;
+import io.zola.Validator;
 import io.zola.controller.model.InvoiceDTO;
 import io.zola.exception.InvoiceException;
 import io.zola.service.context.InvoiceSearchContext;
@@ -32,9 +33,13 @@ public class InvoiceController {
   @Autowired
   private CrudService<InvoiceTO, InvoiceSearchContext> invoiceService;
 
+  @Autowired
+  private Validator<InvoiceDTO> validator;
+
   @RequestMapping(value = Routes.INVOICE_CREATE_PATH, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
   public ResponseEntity<InvoiceDTO> create(@RequestBody @Valid @NotNull InvoiceDTO invoiceDTO) {
+    validator.validate(invoiceDTO);
     return Optional.of(invoiceDTO).map(converter::to)
         .map(invoiceService::create)
         .map(converter::from).map(data -> new ResponseEntity(data, HttpStatus.CREATED))
