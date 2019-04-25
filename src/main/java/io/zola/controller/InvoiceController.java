@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class InvoiceController {
 
-
   @Autowired
   private Converter<InvoiceDTO, InvoiceTO>  converter;
 
@@ -50,10 +49,8 @@ public class InvoiceController {
         .orElseThrow(() -> new InvoiceException("unable to create invoice " + invoiceDTO.toString()));
   }
 
-
   @RequestMapping(value = Routes.INVOICE_SEARCH_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.OK)
-
   public ResponseEntity<Page<InvoiceDTO>> search(@RequestParam(required = false) String invoiceNumber, @RequestParam(required = false) String poNumber, @RequestParam(required = false, defaultValue = "20") Integer pageSize, @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
     Pageable pageable = PageRequest.of(pageNumber, pageSize);
     InvoiceSearchContext invoiceSearchContext = InvoiceSearchContext.builder().invoiceNumber(invoiceNumber).poNumber(poNumber).pageable(pageable).build();
