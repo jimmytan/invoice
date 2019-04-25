@@ -3,13 +3,15 @@ server:
 spring:
 # Database
   datasource:
-    url: jdbc:postgresql://localhost:5432/invoices
-    username: zola
+    url: "jdbc:postgresql://localhost:5432/invoices"
+    username: "zola"
     password:
 # JPA properties
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
+logging:
+  level:
+    org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: ERROR
