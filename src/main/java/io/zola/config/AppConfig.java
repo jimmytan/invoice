@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-
   @Bean
   public ModelMapper modelMapper() {
     return new ModelMapper();
@@ -21,5 +20,4 @@ public class AppConfig {
         PropertyNamingStrategy.SNAKE_CASE);
     return objectMapper;
   }
-
 }

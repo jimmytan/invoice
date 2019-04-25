@@ -52,8 +52,6 @@ public class InvoiceControllerTest {
 
   private JacksonTester<InvoiceDTO> invoiceDTOJacksonTester;
 
-  private JacksonTester<Page<InvoiceDTO>> invoiceDTOPageJacksonTester;
-
   @Before
   public void setUp() {
     JacksonTester.initFields(this, objectMapper);

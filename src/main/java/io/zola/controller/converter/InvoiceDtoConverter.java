@@ -18,8 +18,6 @@ public class InvoiceDtoConverter implements Converter<InvoiceDTO, InvoiceTO> {
   private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
   private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-
-
   @Override
   public InvoiceTO to(InvoiceDTO source) {
     if (source == null) {
