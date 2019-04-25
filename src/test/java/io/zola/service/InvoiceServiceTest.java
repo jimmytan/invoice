@@ -111,10 +111,9 @@ public class InvoiceServiceTest {
   }
 
   @Test(expected = InvoiceException.class)
-  public void shouldFailSeachWithoutPagination() {
+  public void shouldFailSearchWithoutPagination() {
     InvoiceSearchContext invoiceSearchContext = InvoiceSearchContext.builder().invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     invoiceService.search(invoiceSearchContext);
   }
-
 
 }
