@@ -43,7 +43,7 @@ public class InvoiceService implements CrudService<InvoiceTO, InvoiceSearchConte
   public Page<InvoiceTO> search(InvoiceSearchContext searchContext) {
     Pageable pageable = searchContext.getPageable();
     if (pageable == null) {
-      new InvoiceException("must provide pagination information for search");
+      throw new InvoiceException("must provide pagination information for search");
     }
     Page<Invoice> invoices;
     if (searchContext.getPoNumber() == null && searchContext.getInvoiceNumber() == null) {
