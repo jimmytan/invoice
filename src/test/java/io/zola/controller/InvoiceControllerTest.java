@@ -27,8 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -85,10 +83,9 @@ public class InvoiceControllerTest {
   @Test
   public void shouldReturnSearchInvoiceResult() throws Exception{
     Pageable pageable = PageRequest.of(0, 20);
-    Page<InvoiceTO> searchResult = new PageImpl<>(Collections.emptyList(), pageable, 0);
 
     InvoiceSearchContext searchContext = InvoiceSearchContext.builder().poNumber("ttttt").pageable(pageable).build();
-    when(invoiceService.search(searchContext)).thenReturn(searchResult);
+    when(invoiceService.search(searchContext)).thenReturn(Collections.emptyList());
 
     this.mockMvc.perform(get(Routes.INVOICE_SEARCH_PATH + "?poNumber=ttttt&pageSize=20&pageNumber=0").contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isOk());

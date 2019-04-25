@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -51,12 +49,11 @@ public class InvoiceController {
 
   @RequestMapping(value = Routes.INVOICE_SEARCH_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.OK)
-  public ResponseEntity<Page<InvoiceDTO>> search(@RequestParam(required = false) String invoiceNumber, @RequestParam(required = false) String poNumber, @RequestParam(required = false, defaultValue = "20") Integer pageSize, @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+  public ResponseEntity<List<InvoiceDTO>> search(@RequestParam(required = false) String invoiceNumber, @RequestParam(required = false) String poNumber, @RequestParam(required = false, defaultValue = "20") Integer pageSize, @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
     Pageable pageable = PageRequest.of(pageNumber, pageSize);
     InvoiceSearchContext invoiceSearchContext = InvoiceSearchContext.builder().invoiceNumber(invoiceNumber).poNumber(poNumber).pageable(pageable).build();
-    Page<InvoiceTO> invoices = invoiceService.search(invoiceSearchContext);
-    List<InvoiceDTO> content = invoices.stream().map(converter::from).collect(Collectors.toList());
-    return ResponseEntity.ok(new PageImpl(content, pageable, invoices.getTotalElements()));
+    List<InvoiceDTO> invoices = invoiceService.search(invoiceSearchContext).stream().map(converter::from).collect(Collectors.toList());
+    return ResponseEntity.ok(invoices);
   }
 
 }

@@ -18,6 +18,7 @@ import io.zola.service.model.InvoiceTO;
 import io.zola.service.validator.InvoiceToValidator;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -71,19 +72,15 @@ public class InvoiceServiceTest {
     Invoice invoice = Invoice.builder().id(1).createdAt(createAt).amountCents(10000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     Invoice invoice1= Invoice.builder().id(2).createdAt(createAt).amountCents(20000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     Pageable pageable = PageRequest.of(0, 2);
-    Page<Invoice> invoicePage = new PageImpl<>(asList(invoice, invoice1), pageable, 4);
     InvoiceSearchContext invoiceSearchContext = InvoiceSearchContext.builder().invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).pageable(pageable).build();
-    when(invoiceRepository.findAllByInvoiceNumberOrPoNumberOrderByCreatedAt(invoiceNumberCaptor.capture(), poNumberCaptor.capture(), any())).thenReturn(invoicePage);
+    when(invoiceRepository.findAllByInvoiceNumberOrPoNumberOrderByCreatedAtDesc(invoiceNumberCaptor.capture(), poNumberCaptor.capture(), any())).thenReturn(asList(invoice, invoice1));
 
-    Page<InvoiceTO> result = invoiceService.search(invoiceSearchContext);
+    List<InvoiceTO> result = invoiceService.search(invoiceSearchContext);
 
     InvoiceTO expectationTo = InvoiceTO.builder().id(1).createdAt(createAt).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountCents(10000).dueDate(dueDate).build();
     InvoiceTO expectationTo1 = InvoiceTO.builder().id(2).createdAt(createAt).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountCents(20000).dueDate(dueDate).build();
 
-    Page<InvoiceTO> expectationResult = new PageImpl<>(asList(expectationTo, expectationTo1), pageable, 4);
-    assertEquals(expectationResult.getContent(), result.getContent());
-    assertEquals(expectationResult.getPageable(), result.getPageable());
-    assertEquals(expectationResult.getTotalElements(), result.getTotalElements());
+    assertEquals(asList(expectationTo, expectationTo1), result);
     assertEquals(INVOICE_NUMBER, invoiceNumberCaptor.getValue());
     assertEquals(PO_NUMBER, poNumberCaptor.getValue());
   }
@@ -99,15 +96,12 @@ public class InvoiceServiceTest {
     InvoiceSearchContext invoiceSearchContext = InvoiceSearchContext.builder().pageable(pageable).build();
     when(invoiceRepository.findAll(eq(pageable))).thenReturn(invoicePage);
 
-    Page<InvoiceTO> result = invoiceService.search(invoiceSearchContext);
+    List<InvoiceTO> result = invoiceService.search(invoiceSearchContext);
 
     InvoiceTO expectationTo = InvoiceTO.builder().id(1).createdAt(createAt).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountCents(10000).dueDate(dueDate).build();
     InvoiceTO expectationTo1 = InvoiceTO.builder().id(2).createdAt(createAt).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountCents(20000).dueDate(dueDate).build();
 
-    Page<InvoiceTO> expectationResult = new PageImpl<>(asList(expectationTo, expectationTo1), pageable, 4);
-    assertEquals(expectationResult.getContent(), result.getContent());
-    assertEquals(expectationResult.getPageable(), result.getPageable());
-    assertEquals(expectationResult.getTotalElements(), result.getTotalElements());
+    assertEquals(asList(expectationTo, expectationTo1), result);
   }
 
   @Test(expected = InvoiceException.class)

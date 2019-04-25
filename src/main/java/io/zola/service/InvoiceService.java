@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -40,19 +38,18 @@ public class InvoiceService implements CrudService<InvoiceTO, InvoiceSearchConte
   }
 
   @Override
-  public Page<InvoiceTO> search(InvoiceSearchContext searchContext) {
+  public List<InvoiceTO> search(InvoiceSearchContext searchContext) {
     Pageable pageable = searchContext.getPageable();
     if (pageable == null) {
       throw new InvoiceException("must provide pagination information for search");
     }
-    Page<Invoice> invoices;
+    List<Invoice> invoices;
     if (searchContext.getPoNumber() == null && searchContext.getInvoiceNumber() == null) {
-      invoices = invoiceRepository.findAll(pageable);
+      invoices = invoiceRepository.findAll(pageable).getContent();
     }else {
-      invoices = invoiceRepository.findAllByInvoiceNumberOrPoNumberOrderByCreatedAt(searchContext.getInvoiceNumber(), searchContext.getPoNumber(), pageable);
+      invoices = invoiceRepository.findAllByInvoiceNumberOrPoNumberOrderByCreatedAtDesc(searchContext.getInvoiceNumber(), searchContext.getPoNumber(), pageable);
     }
 
-    List<InvoiceTO> content = invoices.getContent().stream().map(converter::from).collect(Collectors.toList());
-    return new PageImpl(content, pageable, invoices.getTotalElements());
+    return invoices.stream().map(converter::from).collect(Collectors.toList());
   }
 }
