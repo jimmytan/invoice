@@ -24,12 +24,12 @@ public class InvoiceDtoConverterTest {
 
   @Test
   public void shouldConvertDtoToToTest() {
-    InvoiceDTO source = InvoiceDTO.builder().amountInCents(10000).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceDTO source = InvoiceDTO.builder().amountCents(10000).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
 
     InvoiceTO invoiceTO = converter.to(source);
 
     LocalDate date = LocalDate.of(1988, 10, 19);
-    InvoiceTO result = InvoiceTO.builder().amountInCents(10000).dueDate(date).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceTO result = InvoiceTO.builder().amountCents(10000).dueDate(date).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     assertEquals(result.toString(), invoiceTO.toString());
   }
 
@@ -37,11 +37,11 @@ public class InvoiceDtoConverterTest {
   public void shouldConvertTOTest() {
     LocalDate date = LocalDate.of(1988, 10, 19);
     LocalDateTime createAt = LocalDateTime.of(1988, 10, 20, 10, 9, 10);
-    InvoiceTO invoiceTO = InvoiceTO.builder().createAt(createAt).amountInCents(10000).dueDate(date).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceTO invoiceTO = InvoiceTO.builder().createdAt(createAt).amountCents(10000).dueDate(date).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
 
     InvoiceDTO invoiceDTO = converter.from(invoiceTO);
 
-    InvoiceDTO result = InvoiceDTO.builder().createAt("1988-10-20T10:09:10Z").amountInCents(10000).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceDTO result = InvoiceDTO.builder().createdAt("1988-10-20T10:09:10Z").amountCents(10000).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     assertEquals(result.toString(), invoiceDTO.toString());
   }
 

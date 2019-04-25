@@ -25,10 +25,10 @@ public class InvoiceToConverterTest {
   @Test
   public void shouldConvertToDataModelTest() {
     LocalDate dueDate = LocalDate.of(2019, 4, 24);
-    InvoiceTO invoiceTO = InvoiceTO.builder().invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountInCents(10000).dueDate(dueDate).build();
+    InvoiceTO invoiceTO = InvoiceTO.builder().invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountCents(10000).dueDate(dueDate).build();
 
     Invoice invoice = converter.to(invoiceTO);
-    Invoice result = Invoice.builder().amountInCents(10000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    Invoice result = Invoice.builder().amountCents(10000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     assertEquals(result, invoice);
   }
 
@@ -36,10 +36,10 @@ public class InvoiceToConverterTest {
   public void shouldConvertToTransferObjectTest() {
     LocalDate dueDate = LocalDate.of(2019, 4, 24);
     LocalDateTime createAt = LocalDateTime.of(2019, 4, 24, 10, 56, 0);
-    Invoice invoice = Invoice.builder().id(1).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountInCents(10000).dueDate(dueDate).createAt(createAt).build();
+    Invoice invoice = Invoice.builder().id(1).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountCents(10000).dueDate(dueDate).createdAt(createAt).build();
 
     InvoiceTO invoiceTO = converter.from(invoice);
-    InvoiceTO result = InvoiceTO.builder().id(1).createAt(createAt).amountInCents(10000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceTO result = InvoiceTO.builder().id(1).createdAt(createAt).amountCents(10000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     assertEquals(result, invoiceTO);
   }
 

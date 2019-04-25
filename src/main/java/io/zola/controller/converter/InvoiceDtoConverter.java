@@ -44,8 +44,8 @@ public class InvoiceDtoConverter implements Converter<InvoiceDTO, InvoiceTO> {
       invoiceDTO.setDueDate(target.getDueDate().format(DATE_FORMATTER));
     }
 
-    if (target.getCreateAt() != null) {
-      invoiceDTO.setCreateAt(target.getCreateAt().format(DATE_TIME_FORMATTER));
+    if (target.getCreatedAt() != null) {
+      invoiceDTO.setCreatedAt(target.getCreatedAt().format(DATE_TIME_FORMATTER));
     }
     return invoiceDTO;
   }

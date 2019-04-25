@@ -16,8 +16,8 @@ public class InvoiceTO {
   private long id;
   private String invoiceNumber;
   private String poNumber;
-  private long amountInCents;
+  private long amountCents;
   private LocalDate dueDate;
-  private LocalDateTime createAt;
+  private LocalDateTime createdAt;
 
 }

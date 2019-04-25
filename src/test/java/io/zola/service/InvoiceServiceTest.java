@@ -33,17 +33,17 @@ public class InvoiceServiceTest {
   @Test
   public void shouldSaveTest() {
     LocalDate dueDate = LocalDate.of(2019, 4, 24);
-    InvoiceTO invoiceTO = InvoiceTO.builder().invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountInCents(10000).dueDate(dueDate).build();
+    InvoiceTO invoiceTO = InvoiceTO.builder().invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountCents(10000).dueDate(dueDate).build();
 
-    Invoice invoice = Invoice.builder().amountInCents(10000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    Invoice invoice = Invoice.builder().amountCents(10000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     LocalDateTime createAt = LocalDateTime.of(2019, 4, 24, 10, 56, 0);
-    Invoice savedInvoice = Invoice.builder().id(1).createAt(createAt).amountInCents(10000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    Invoice savedInvoice = Invoice.builder().id(1).createdAt(createAt).amountCents(10000).dueDate(dueDate).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
 
     when(invoiceRepository.save(eq(invoice))).thenReturn(savedInvoice);
 
     InvoiceTO result = invoiceService.create(invoiceTO);
 
-    InvoiceTO expectation = InvoiceTO.builder().id(1).createAt(createAt).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountInCents(10000).dueDate(dueDate).build();
+    InvoiceTO expectation = InvoiceTO.builder().id(1).createdAt(createAt).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).amountCents(10000).dueDate(dueDate).build();
     assertEquals(expectation, result);
   }
 
