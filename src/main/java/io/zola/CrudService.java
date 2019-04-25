@@ -1,12 +1,12 @@
 package io.zola;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface CrudService<M, C> {
 
   M create(M model);
 
-  List<M> search(C searchContext);
+  Page<M> search(C searchContext);
 
 
 }
