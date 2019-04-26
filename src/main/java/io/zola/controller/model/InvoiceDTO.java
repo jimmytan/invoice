@@ -21,7 +21,7 @@ public class InvoiceDTO {
   private String poNumber;
 
   @NotNull
-  private long amountCents;
+  private Long amountCents;
 
   @NotNull
   private String dueDate;

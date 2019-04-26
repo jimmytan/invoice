@@ -57,8 +57,8 @@ public class InvoiceControllerTest {
 
   @Test
   public void shouldReturnCreatedInvoiceOnValidCreateInvoiceRequest() throws Exception{
-    InvoiceDTO invoiceDTO = InvoiceDTO.builder().amountCents(10000).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
-    InvoiceDTO returnedInvoiceDTO = InvoiceDTO.builder().id(1).amountCents(10000).dueDate("1988-10-19").createdAt("2019-04-25T10:49:43Z").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceDTO invoiceDTO = InvoiceDTO.builder().amountCents(Long.valueOf(10000)).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceDTO returnedInvoiceDTO = InvoiceDTO.builder().id(1).amountCents(Long.valueOf(10000)).dueDate("1988-10-19").createdAt("2019-04-25T10:49:43Z").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     LocalDate date = LocalDate.of(1988, 10, 19);
     LocalDateTime createAt = LocalDateTime.of(2019, 04, 25, 10, 49, 43);
     InvoiceTO invoiceTO = InvoiceTO.builder().amountCents(10000).dueDate(date).invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
@@ -73,7 +73,7 @@ public class InvoiceControllerTest {
 
   @Test
   public void shouldFailCreateInvoiceRequestWithMissingInfo() throws Exception{
-    InvoiceDTO invoiceDTO = InvoiceDTO.builder().amountCents(10000).dueDate("1988-10-19").poNumber(PO_NUMBER).build();
+    InvoiceDTO invoiceDTO = InvoiceDTO.builder().amountCents(Long.valueOf(10000)).dueDate("1988-10-19").poNumber(PO_NUMBER).build();
     this.mockMvc.perform(post(Routes.INVOICE_CREATE_PATH)
         .content(invoiceDTOJacksonTester.write(invoiceDTO).getJson())
         .contentType(MediaType.APPLICATION_JSON_VALUE))

@@ -1,5 +1,5 @@
 ##Introduction
-Simple RESTFUL web service creates and search invoices.
+Simple RESTFUL web service creates and searches invoices.
 
 the project has three layers: 
 Controller and service layer have its own object, validator, data converter 
@@ -7,16 +7,15 @@ Controller and service layer have its own object, validator, data converter
 2. service: has the business logic and does business value validation
 3. repository: database layer which connects to postgresql
 
-For this simple project, these layer maybe over engineering. the loose coupling layer gives more freedom for future modification
+For this simple project, these layers may be over engineering. the loose coupling layer gives more freedom for future modification.
 
-#technical stack:
-Spring + JPA
 
 ##Prerequisite
-1. apache maven must be installed https://maven.apache.org/
+1. apache maven must be installed. https://maven.apache.org/
 2. postgresql must running on localhost and listenning on port 5432
-3. database invoices and user zola must be added
-4. certain permission must be granted to database user zola
+3. database invoices and user zola without password must be added
+4. create the table invoices
+5. certain permission must be granted to database user zola
 grant all privileges on table invoices to zola;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO zola;
 
@@ -27,6 +26,7 @@ under root project directory run the following command
 
 ##Testing
 Any http tool should be good. Here we are using curl
+
 * to create an invoice
 curl -d '{
 "invoice_number": "456754",

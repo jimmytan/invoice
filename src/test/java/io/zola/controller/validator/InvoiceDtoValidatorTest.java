@@ -16,7 +16,7 @@ public class InvoiceDtoValidatorTest {
 
   @Test(expected = InvoiceValidationException.class)
   public void shouldFailValidationWrongFormatDueDate() {
-    InvoiceDTO dto = InvoiceDTO.builder().amountCents(10000).dueDate("1988/10/19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceDTO dto = InvoiceDTO.builder().amountCents(Long.valueOf(10000)).dueDate("1988/10/19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     validator.validate(dto);
   }
 

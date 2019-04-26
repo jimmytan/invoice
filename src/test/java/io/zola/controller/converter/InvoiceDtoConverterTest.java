@@ -24,7 +24,7 @@ public class InvoiceDtoConverterTest {
 
   @Test
   public void shouldConvertDtoToToTest() {
-    InvoiceDTO source = InvoiceDTO.builder().amountCents(10000).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceDTO source = InvoiceDTO.builder().amountCents(Long.valueOf(10000)).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
 
     InvoiceTO invoiceTO = converter.to(source);
 
@@ -41,7 +41,7 @@ public class InvoiceDtoConverterTest {
 
     InvoiceDTO invoiceDTO = converter.from(invoiceTO);
 
-    InvoiceDTO result = InvoiceDTO.builder().createdAt("1988-10-20T10:09:10Z").amountCents(10000).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
+    InvoiceDTO result = InvoiceDTO.builder().createdAt("1988-10-20T10:09:10Z").amountCents(Long.valueOf(10000)).dueDate("1988-10-19").invoiceNumber(INVOICE_NUMBER).poNumber(PO_NUMBER).build();
     assertEquals(result.toString(), invoiceDTO.toString());
   }
 
