@@ -22,7 +22,7 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO zola;
 
 ##Compile
 under root project directory run the following command
-1. mvn install
+1. mvn clean install
 2. java -jar target/invoice-service-1.0-SNAPSHOT.jar
 
 ##Testing
